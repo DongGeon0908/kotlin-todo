@@ -5,6 +5,7 @@ import com.bunjang.todo.app.rest.dto.request.PostCreateRequest
 import com.bunjang.todo.app.rest.dto.request.PostUpdateRequest
 import com.bunjang.todo.app.service.PostService
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -33,7 +34,11 @@ class PostController(private val postService: PostService) : RestSupport() {
     fun readAll():
             ResponseEntity<*> = ok(postService.readAll())
 
-    @PostMapping("/{id}")
+    @PostMapping("/{postId}")
     fun changeStatus(@PathVariable postId: Long):
             ResponseEntity<*> = ok(postService.changeStatus(postId))
+
+    @DeleteMapping("/{postId}")
+    fun delete(@PathVariable postId: Long):
+            ResponseEntity<*> = ok(postService.delete(postId))
 }

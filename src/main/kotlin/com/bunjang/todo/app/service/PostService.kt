@@ -55,4 +55,10 @@ class PostService(
 
         return PostChangeStatusResponse(post.id!!, post.title, post.content, post.nickname, post.status.description)
     }
+
+    @Transactional
+    fun delete(postId: Long): PostDeleteResponse {
+        postRepository.deleteById(postId)
+        return PostDeleteResponse(postId)
+    }
 }
