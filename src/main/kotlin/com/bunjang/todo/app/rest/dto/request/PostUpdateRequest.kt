@@ -1,6 +1,8 @@
 package com.bunjang.todo.app.rest.dto.request
 
+import javax.validation.constraints.NotBlank
+
 data class PostUpdateRequest(
-    val title: String,
-    val content: String
+    @field:NotBlank val title: String,
+    @field:NotBlank val content: String
 )

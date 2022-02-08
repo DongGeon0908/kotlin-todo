@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.validation.Valid
 
 @Api("post API")
 @RestController
@@ -23,7 +24,7 @@ class PostController(private val postService: PostService) : RestSupport() {
 
     @ApiOperation("post를 생성한다")
     @PostMapping
-    fun insert(@RequestBody request: PostCreateRequest):
+    fun insert(@Valid @RequestBody request: PostCreateRequest):
             ResponseEntity<*> = created(postService.save(request))
 
     @ApiOperation("post를 단건 조회한다")
@@ -33,7 +34,7 @@ class PostController(private val postService: PostService) : RestSupport() {
 
     @ApiOperation("post를 업데이트한다")
     @PatchMapping("/{postId}")
-    fun update(@PathVariable postId: Long, @RequestBody request: PostUpdateRequest):
+    fun update(@PathVariable postId: Long, @Valid @RequestBody request: PostUpdateRequest):
             ResponseEntity<*> = ok(postService.update(postId, request))
 
     @ApiOperation("post를 전체 조회한다")
