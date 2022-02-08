@@ -1,8 +1,8 @@
-package com.bunjang.todo.controller
+package com.bunjang.todo.app.rest.controller
 
-import com.bunjang.todo.common.RestSupport
-import com.bunjang.todo.dto.request.PostCreateRequest
-import com.bunjang.todo.service.PostService
+import com.bunjang.todo.app.rest.controller.support.RestSupport
+import com.bunjang.todo.app.rest.dto.request.PostCreateRequest
+import com.bunjang.todo.app.service.PostService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody

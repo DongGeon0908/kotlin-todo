@@ -1,6 +1,6 @@
-package com.bunjang.todo.repository
+package com.bunjang.todo.app.repository
 
-import com.bunjang.todo.entity.Post
+import com.bunjang.todo.app.entity.Post
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 

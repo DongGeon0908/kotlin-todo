@@ -1,4 +1,4 @@
-package com.bunjang.todo.common
+package com.bunjang.todo.app.rest.controller.support
 
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity

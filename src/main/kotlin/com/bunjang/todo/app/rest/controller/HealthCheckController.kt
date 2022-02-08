@@ -1,4 +1,4 @@
-package com.bunjang.todo.controller
+package com.bunjang.todo.app.rest.controller
 
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController

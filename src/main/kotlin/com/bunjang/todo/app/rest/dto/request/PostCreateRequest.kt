@@ -1,4 +1,4 @@
-package com.bunjang.todo.dto.request
+package com.bunjang.todo.app.rest.dto.request
 
 data class PostCreateRequest(
     val title: String,

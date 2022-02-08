@@ -1,9 +1,9 @@
-package com.bunjang.todo.service
+package com.bunjang.todo.app.service
 
-import com.bunjang.todo.dto.request.PostCreateRequest
-import com.bunjang.todo.dto.response.PostCreateResponse
-import com.bunjang.todo.entity.Post
-import com.bunjang.todo.repository.PostRepository
+import com.bunjang.todo.app.rest.dto.request.PostCreateRequest
+import com.bunjang.todo.app.rest.dto.response.PostCreateResponse
+import com.bunjang.todo.app.entity.Post
+import com.bunjang.todo.app.repository.PostRepository
 import org.springframework.stereotype.Service
 import javax.transaction.Transactional
 
@@ -13,6 +13,6 @@ class PostService(private val postRepository: PostRepository) {
     fun save(postCreateRequest: PostCreateRequest): PostCreateResponse {
         val instance = Post(postCreateRequest.title, postCreateRequest.content, postCreateRequest.nickname)
         val post = postRepository.save(instance)
-        return PostCreateResponse(post.title, post.content, post.nickname)
+        return PostCreateResponse(post.id!!, post.title, post.content, post.nickname, post.status.description)
     }
 }
