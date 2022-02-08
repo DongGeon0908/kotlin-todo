@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional
 class PostService(
     private val postRepository: PostRepository
 ) {
-
     @Transactional
     fun save(postCreateRequest: PostCreateRequest): PostCreateResponse {
         val instance = Post(postCreateRequest.title, postCreateRequest.content, postCreateRequest.nickname)
