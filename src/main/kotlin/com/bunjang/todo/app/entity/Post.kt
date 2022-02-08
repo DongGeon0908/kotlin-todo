@@ -5,7 +5,12 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "post")
-class Post(title: String, content: String, nickname: String) : BaseEntity() {
+class Post(
+    title: String,
+    content: String,
+    nickname: String
+) : BaseEntity() {
+
     @Id
     @Column(name = "post_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,5 +33,9 @@ class Post(title: String, content: String, nickname: String) : BaseEntity() {
     fun update(title: String, content: String) {
         this.title = title
         this.content = content
+    }
+
+    fun changeStatus() {
+        this.status.change();
     }
 }

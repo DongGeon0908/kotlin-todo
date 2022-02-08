@@ -18,20 +18,22 @@ import org.springframework.web.bind.annotation.RestController
 class PostController(private val postService: PostService) : RestSupport() {
 
     @PostMapping
-    fun insert(@RequestBody request: PostCreateRequest): ResponseEntity<*> {
-        val response = postService.save(request)
-        return created(response)
-    }
+    fun insert(@RequestBody request: PostCreateRequest):
+            ResponseEntity<*> = created(postService.save(request))
 
     @GetMapping("/{postId}")
-    fun readOne(@PathVariable postId: Long): ResponseEntity<*> {
-        val response = postService.read(postId)
-        return ok(response)
-    }
+    fun readOne(@PathVariable postId: Long):
+            ResponseEntity<*> = ok(postService.read(postId))
 
     @PatchMapping("/{postId}")
-    fun update(@PathVariable postId: Long, @RequestBody request: PostUpdateRequest): ResponseEntity<*> {
-        val response = postService.update(postId, request)
-        return ok(response)
-    }
+    fun update(@PathVariable postId: Long, @RequestBody request: PostUpdateRequest):
+            ResponseEntity<*> = ok(postService.update(postId, request))
+
+    @GetMapping
+    fun readAll():
+            ResponseEntity<*> = ok(postService.readAll())
+
+    @PostMapping("/{id}")
+    fun changeStatus(@PathVariable postId: Long):
+            ResponseEntity<*> = ok(postService.changeStatus(postId))
 }

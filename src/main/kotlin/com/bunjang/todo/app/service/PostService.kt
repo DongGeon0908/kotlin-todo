@@ -1,17 +1,17 @@
 package com.bunjang.todo.app.service
 
 import com.bunjang.todo.app.rest.dto.request.PostCreateRequest
-import com.bunjang.todo.app.rest.dto.response.PostCreateResponse
 import com.bunjang.todo.app.entity.Post
 import com.bunjang.todo.app.repository.PostRepository
 import com.bunjang.todo.app.rest.dto.request.PostUpdateRequest
-import com.bunjang.todo.app.rest.dto.response.PostReadResponse
-import com.bunjang.todo.app.rest.dto.response.PostUpdateResponse
+import com.bunjang.todo.app.rest.dto.response.*
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class PostService(private val postRepository: PostRepository) {
+class PostService(
+    private val postRepository: PostRepository
+) {
 
     @Transactional
     fun save(postCreateRequest: PostCreateRequest): PostCreateResponse {
@@ -33,5 +33,26 @@ class PostService(private val postRepository: PostRepository) {
         post.update(request.title, request.content)
 
         return PostUpdateResponse(post.id!!, post.title, post.content, post.nickname, post.status.description)
+    }
+
+    @Transactional(readOnly = true)
+    fun readAll(): PostReadAllResponse {
+
+        val posts: ArrayList<PostReadResponse> = ArrayList()
+
+        postRepository.findAll()
+            .mapTo(posts) {
+                PostReadResponse(it.id!!, it.title, it.content, it.nickname, it.status.description)
+            }
+
+        return PostReadAllResponse(posts)
+    }
+
+    @Transactional
+    fun changeStatus(postId: Long): PostChangeStatusResponse {
+        val post = postRepository.findById(postId).get()
+        post.changeStatus()
+
+        return PostChangeStatusResponse(post.id!!, post.title, post.content, post.nickname, post.status.description)
     }
 }
