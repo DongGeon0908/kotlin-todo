@@ -13,30 +13,27 @@ class PostService(
     private val postRepository: PostRepository
 ) {
     @Transactional
-    fun save(postCreateRequest: PostCreateRequest): PostCreateResponse {
-        val instance = Post(postCreateRequest.title, postCreateRequest.content, postCreateRequest.nickname)
+    fun save(request: PostCreateRequest): PostCreateResponse {
+        val instance = Post(request.title, request.content, request.nickname)
         val post = postRepository.save(instance)
         return PostCreateResponse(post.id!!, post.title, post.content, post.nickname, post.status.description)
     }
 
     @Transactional(readOnly = true)
-    fun read(postId: Long): PostReadResponse {
-        val post = postRepository.findById(postId).get()
-
+    fun read(id: Long): PostReadResponse {
+        val post = postRepository.findById(id).get()
         return PostReadResponse(post.id!!, post.title, post.content, post.nickname, post.status.description)
     }
 
     @Transactional
-    fun update(postId: Long, request: PostUpdateRequest): PostUpdateResponse {
-        val post = postRepository.findById(postId).get()
+    fun update(id: Long, request: PostUpdateRequest): PostUpdateResponse {
+        val post = postRepository.findById(id).get()
         post.update(request.title, request.content)
-
         return PostUpdateResponse(post.id!!, post.title, post.content, post.nickname, post.status.description)
     }
 
     @Transactional(readOnly = true)
     fun readAll(): PostReadAllResponse {
-
         val posts: ArrayList<PostReadResponse> = ArrayList()
 
         postRepository.findAll()
@@ -48,16 +45,16 @@ class PostService(
     }
 
     @Transactional
-    fun changeStatus(postId: Long): PostChangeStatusResponse {
-        val post = postRepository.findById(postId).get()
+    fun changeStatus(id: Long): PostChangeStatusResponse {
+        val post = postRepository.findById(id).get()
         post.changeStatus()
 
         return PostChangeStatusResponse(post.id!!, post.title, post.content, post.nickname, post.status.description)
     }
 
     @Transactional
-    fun delete(postId: Long): PostDeleteResponse {
-        postRepository.deleteById(postId)
-        return PostDeleteResponse(postId)
+    fun delete(id: Long): PostDeleteResponse {
+        postRepository.deleteById(id)
+        return PostDeleteResponse(id)
     }
 }
