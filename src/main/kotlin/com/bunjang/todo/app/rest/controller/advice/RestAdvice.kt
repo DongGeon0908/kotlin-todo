@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 class RestAdvice : RestSupport() {
     @ExceptionHandler(BusinessException::class)
     fun businessException(exception: BusinessException) =
-        error(ErrorResponse(exception.getErrorCode()), exception.getStatus())
+        ErrorResponse(exception.getErrorCode()).wrapError(exception.getStatus())
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun methodArgumentNotValidException(exception: MethodArgumentNotValidException) =
-        error(ErrorResponse(ErrorCode.INVALID_INPUT_VALUE), HttpStatus.BAD_REQUEST)
+        ErrorResponse(ErrorCode.INVALID_INPUT_VALUE).wrapError(HttpStatus.BAD_REQUEST)
 
     @ExceptionHandler(Exception::class)
     fun exception(exception: java.lang.Exception) =
-        error(ErrorResponse(ErrorCode.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR)
+        ErrorResponse(ErrorCode.INTERNAL_SERVER_ERROR).wrapError(HttpStatus.INTERNAL_SERVER_ERROR)
 }

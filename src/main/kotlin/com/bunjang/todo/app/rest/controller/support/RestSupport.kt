@@ -21,8 +21,9 @@ abstract class RestSupport {
         ResponseEntity
             .status(status)
             .contentType(MEDIA_TYPE_APPLICATION_JSON_UTF8)
-            .body(ResponseDto(data))
+            .body(data)
 
     fun <T> T.wrapOk() = ok(this)
     fun <T> T.wrapCreated() = created(this)
+    fun <T> T.wrapError(status: HttpStatus) = error(this, status)
 }
