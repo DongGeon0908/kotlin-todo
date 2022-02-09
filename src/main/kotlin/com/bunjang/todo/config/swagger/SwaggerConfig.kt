@@ -2,6 +2,13 @@ package com.bunjang.todo.config.swagger
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.ResponseEntity
+import org.springframework.http.server.reactive.ServerHttpRequest
+import org.springframework.http.server.reactive.ServerHttpResponse
+import org.springframework.web.server.ServerWebExchange
+import org.springframework.web.server.WebSession
+import springfox.documentation.builders.PathSelectors
+import springfox.documentation.builders.RequestHandlerSelectors
 import springfox.documentation.service.ApiInfo
 import springfox.documentation.service.Contact
 import springfox.documentation.spi.DocumentationType
@@ -21,8 +28,6 @@ class SwaggerConfig {
     private val TERMS_OF_SERVICE_URL = "urn:tos"
     private val APACHE_LICENSE = "Apache 2.0"
     private val APACHE_LICENSE_URL = "http://www.apache.org/licenses/LICENSE-2.0"
-    private val CONTEXT_TYPE_JSON = "application/json"
-    private val CONTEXT_TYPE_XML = "application/xml"
 
     private val DEFAULT_CONTACT = Contact(
         PROJECT_NAME,
@@ -41,13 +46,24 @@ class SwaggerConfig {
         ArrayList()
     )
 
-    private val DEFAULT_PRODUCES_AND_CONSUMES: Set<String> =
-        HashSet(Arrays.asList(CONTEXT_TYPE_JSON, CONTEXT_TYPE_XML))
-
     @Bean
     fun api(): Docket? =
         Docket(DocumentationType.SWAGGER_2)
+            .enable(true)
+            .useDefaultResponseMessages(false)
+            .ignoredParameterTypes(
+                WebSession::class.java,
+                ServerHttpRequest::class.java,
+                ServerHttpResponse::class.java,
+                ServerWebExchange::class.java
+            )
             .apiInfo(Default_API_INFO)
-            .produces(DEFAULT_PRODUCES_AND_CONSUMES)
-            .consumes(DEFAULT_PRODUCES_AND_CONSUMES)
+            .genericModelSubstitutes(
+                Optional::class.java,
+                ResponseEntity::class.java
+            )
+            .select()
+            .apis(RequestHandlerSelectors.basePackage("com.bunjang.todo.app.rest.controller"))
+            .paths(PathSelectors.regex("/api/.*"))
+            .build()
 }
