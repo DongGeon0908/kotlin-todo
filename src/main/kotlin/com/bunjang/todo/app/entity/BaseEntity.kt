@@ -19,6 +19,6 @@ abstract class BaseEntity {
 
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
-    lateinit var updatedAt: LocalDateTime
+    lateinit var modifiedAt: LocalDateTime
         internal set
 }
