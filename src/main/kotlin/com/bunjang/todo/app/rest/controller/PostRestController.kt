@@ -4,6 +4,7 @@ import com.bunjang.todo.app.rest.controller.support.RestSupport
 import com.bunjang.todo.app.rest.dto.request.PostCreateRequest
 import com.bunjang.todo.app.rest.dto.request.PostUpdateRequest
 import com.bunjang.todo.app.service.PostService
+import com.bunjang.todo.config.web.MEDIA_TYPE_APPLICATION_JSON_UTF8_VALUE
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.springframework.http.ResponseEntity
@@ -19,7 +20,7 @@ import javax.validation.Valid
 
 @Api("post API")
 @RestController
-@RequestMapping("api/v1/posts")
+@RequestMapping(path = ["api/v1/posts"], produces = [MEDIA_TYPE_APPLICATION_JSON_UTF8_VALUE])
 class PostRestController(private val postService: PostService) : RestSupport() {
 
     @ApiOperation("post를 생성한다")

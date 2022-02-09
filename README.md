@@ -2,11 +2,14 @@
 
 ### TODO
 
-0. 전반적인 코드 리펙토링 진행
-1. Exception 수정 작업 진행
-2. WebConfig 수정 진행
-3. Page처리 작업 진행
-4. Swagger 수정 작업 진행
+- [x] 기본적인 CRUD
+- [x] 전반적인 코드 리펙토링 진행
+- [x] Exception 수정 작업 진행
+- [ ] WebConfig 수정 진행
+- [ ] Page처리 작업 진행
+- [ ] Swagger 수정 작업 진행
+- [ ] CORS 추가
+- [ ] API 스펙 변경
 
 ### TIPS
 
