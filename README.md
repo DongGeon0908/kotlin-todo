@@ -8,12 +8,14 @@
 - [x] WebConfig 수정 진행
 - [ ] Page처리 작업 진행
 - [ ] Swagger 수정 작업 진행
-  - [x] 기본적인 Swagger 리펙토링 진행
-  - [ ] Status Code 변경 필요
-  - [ ] Error code 및 Response 내용추가
-  - [ ] response가 data로 박싱되게 사용
+    - [x] 기본적인 Swagger 리펙토링 진행
+    - [ ] Status Code 변경 필요
+    - [x] Error code 및 Response 내용추가
+    - [ ] response가 data로 박싱되게 사용
 - [x] CORS 추가
 - [x] API 스펙 변경
+- [ ] TEST Code 작성 진행하기
+- [ ] 함수형으로 메서드 바꾸기
 
 ### TIPS
 

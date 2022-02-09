@@ -32,7 +32,5 @@ class Post(
         this.content = content
     }
 
-    fun changeStatus() {
-        this.status.change();
-    }
+    fun changeStatus() = this.status.change()
 }
