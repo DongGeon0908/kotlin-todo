@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 class PostService(
     private val postRepository: PostRepository
 ) {
+
     @Transactional
     fun save(request: PostCreateRequest): PostCreateResponse {
         val instance = Post(request.title, request.content, request.nickname)
@@ -59,4 +60,5 @@ class PostService(
         postRepository.deleteById(id)
         return PostDeleteResponse(id)
     }
+
 }

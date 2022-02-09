@@ -19,6 +19,7 @@ import java.util.*
 @Configuration
 @EnableSwagger2
 class SwaggerConfig {
+
     private val PROJECT_NAME = "kotlin-todo"
     private val GITHUB_URL = "https://github.com/DongGeon0908/kotlin-todo"
     private val DEVELOPER_EMAIL = "wrjssmjdhappy@gmail.com"
@@ -66,4 +67,5 @@ class SwaggerConfig {
             .apis(RequestHandlerSelectors.basePackage("com.bunjang.todo.app.rest.controller"))
             .paths(PathSelectors.regex("/api/.*"))
             .build()
+
 }
