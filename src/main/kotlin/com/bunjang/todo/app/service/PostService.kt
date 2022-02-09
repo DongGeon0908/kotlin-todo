@@ -2,6 +2,8 @@ package com.bunjang.todo.app.service
 
 import com.bunjang.todo.app.rest.dto.request.PostCreateRequest
 import com.bunjang.todo.app.entity.Post
+import com.bunjang.todo.app.excpetion.ErrorCode
+import com.bunjang.todo.app.excpetion.NotExistsException
 import com.bunjang.todo.app.repository.PostRepository
 import com.bunjang.todo.app.rest.dto.request.PostUpdateRequest
 import com.bunjang.todo.app.rest.dto.response.*
@@ -21,13 +23,13 @@ class PostService(
 
     @Transactional(readOnly = true)
     fun read(id: Long): PostReadResponse {
-        val post = postRepository.findById(id).get()
+        val post = postRepository.findById(id).orElseThrow { throw NotExistsException(ErrorCode.NOT_EXISTS_POST) }
         return PostReadResponse(post.id!!, post.title, post.content, post.nickname, post.status.description)
     }
 
     @Transactional
     fun update(id: Long, request: PostUpdateRequest): PostUpdateResponse {
-        val post = postRepository.findById(id).get()
+        val post = postRepository.findById(id).orElseThrow { throw NotExistsException(ErrorCode.NOT_EXISTS_POST) }
         post.update(request.title, request.content)
         return PostUpdateResponse(post.id!!, post.title, post.content, post.nickname, post.status.description)
     }
@@ -46,7 +48,7 @@ class PostService(
 
     @Transactional
     fun changeStatus(id: Long): PostChangeStatusResponse {
-        val post = postRepository.findById(id).get()
+        val post = postRepository.findById(id).orElseThrow { throw NotExistsException(ErrorCode.NOT_EXISTS_POST) }
         post.changeStatus()
 
         return PostChangeStatusResponse(post.id!!, post.title, post.content, post.nickname, post.status.description)

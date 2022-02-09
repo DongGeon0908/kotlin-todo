@@ -20,7 +20,7 @@ import javax.validation.Valid
 @Api("post API")
 @RestController
 @RequestMapping("api/v1/posts")
-class PostController(private val postService: PostService) : RestSupport() {
+class PostRestController(private val postService: PostService) : RestSupport() {
 
     @ApiOperation("post를 생성한다")
     @PostMapping

@@ -5,5 +5,7 @@ import java.time.LocalDateTime
 data class ErrorResponse(
     val code: String,
     val message: String,
-    val timeStamp: LocalDateTime = LocalDateTime.now()
-)
+    val serverDateTime: LocalDateTime = LocalDateTime.now()
+) {
+    constructor(errorCode: ErrorCode) : this(errorCode.code, errorCode.message)
+}
