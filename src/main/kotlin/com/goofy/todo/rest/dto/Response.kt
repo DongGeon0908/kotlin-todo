@@ -1,12 +1,22 @@
 package com.goofy.todo.rest.dto
 
+import com.goofy.todo.entity.Post
+
 data class PostChangeStatusResponse(
     val id: Long,
     val title: String,
     val content: String,
     val nickname: String,
     val status: String
-)
+) {
+    constructor(post: Post) : this(
+        post.id!!,
+        post.title,
+        post.content,
+        post.nickname,
+        post.status.description
+    )
+}
 
 data class PostCreateResponse(
     val id: Long,
@@ -14,7 +24,15 @@ data class PostCreateResponse(
     val content: String,
     val nickname: String,
     val status: String
-)
+) {
+    constructor(post: Post) : this(
+        post.id!!,
+        post.title,
+        post.content,
+        post.nickname,
+        post.status.description
+    )
+}
 
 data class PostDeleteResponse(
     val id: Long
@@ -30,7 +48,15 @@ data class PostReadResponse(
     val content: String,
     val nickname: String,
     val status: String
-)
+) {
+    constructor(post: Post) : this(
+        post.id!!,
+        post.title,
+        post.content,
+        post.nickname,
+        post.status.description
+    )
+}
 
 data class PostUpdateResponse(
     val id: Long,
@@ -38,4 +64,12 @@ data class PostUpdateResponse(
     val content: String,
     val nickname: String,
     val status: String
-)
+) {
+    constructor(post: Post) : this(
+        post.id!!,
+        post.title,
+        post.content,
+        post.nickname,
+        post.status.description
+    )
+}

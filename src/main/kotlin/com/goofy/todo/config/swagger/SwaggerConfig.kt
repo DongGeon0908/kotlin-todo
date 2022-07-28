@@ -63,7 +63,7 @@ class SwaggerConfig {
                 ResponseEntity::class.java
             )
             .select()
-            .apis(RequestHandlerSelectors.basePackage("com.bunjang.todo.app.rest.controller"))
+            .apis(RequestHandlerSelectors.basePackage("com.goofy.todo.rest.controller"))
             .paths(PathSelectors.regex("/api/.*"))
             .build()
 

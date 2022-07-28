@@ -10,6 +10,7 @@ import com.goofy.todo.rest.dto.PostReadAllResponse
 import com.goofy.todo.rest.dto.PostReadResponse
 import com.goofy.todo.rest.dto.PostUpdateRequest
 import com.goofy.todo.rest.dto.PostUpdateResponse
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import com.goofy.todo.rest.dto.PostDeleteResponse as PostDeleteResponse1
@@ -22,26 +23,16 @@ class PostService(
     fun save(request: PostCreateRequest): PostCreateResponse {
         val instance = com.goofy.todo.entity.Post(request.title, request.content, request.nickname)
         val post = postRepository.save(instance)
-        return PostCreateResponse(
-            post.id!!,
-            post.title,
-            post.content,
-            post.nickname,
-            post.status.description
-        )
+
+        return PostCreateResponse(post)
     }
 
     @Transactional(readOnly = true)
     fun read(id: Long): PostReadResponse {
-        val post = postRepository.findById(id)
-            .orElseThrow { throw NotExistsException(ErrorCode.NOT_EXISTS_POST) }
-        return PostReadResponse(
-            post.id!!,
-            post.title,
-            post.content,
-            post.nickname,
-            post.status.description
-        )
+        val post = postRepository.findByIdOrNull(id)
+            ?: throw NotExistsException(ErrorCode.NOT_EXISTS_POST)
+
+        return PostReadResponse(post)
     }
 
     @Transactional
@@ -49,49 +40,28 @@ class PostService(
         id: Long,
         request: PostUpdateRequest
     ): PostUpdateResponse {
-        val post = postRepository.findById(id)
-            .orElseThrow { throw NotExistsException(ErrorCode.NOT_EXISTS_POST) }
-        post.update(request.title, request.content)
-        return PostUpdateResponse(
-            post.id!!,
-            post.title,
-            post.content,
-            post.nickname,
-            post.status.description
-        )
+        val post = postRepository.findByIdOrNull(id)
+            ?.apply { this.update(request.title, request.content) }
+            ?: throw NotExistsException(ErrorCode.NOT_EXISTS_POST)
+
+        return PostUpdateResponse(post)
     }
 
     @Transactional(readOnly = true)
     fun readAll(): PostReadAllResponse {
-        val posts: ArrayList<PostReadResponse> = ArrayList()
-
-        postRepository.findAll()
-            .mapTo(posts) {
-                PostReadResponse(
-                    it.id!!,
-                    it.title,
-                    it.content,
-                    it.nickname,
-                    it.status.description
-                )
-            }
+        val posts = postRepository.findAll()
+            .map { PostReadResponse(it) }
 
         return PostReadAllResponse(posts)
     }
 
     @Transactional
     fun changeStatus(id: Long): PostChangeStatusResponse {
-        val post = postRepository.findById(id)
-            .orElseThrow { throw NotExistsException(ErrorCode.NOT_EXISTS_POST) }
-        post.changeStatus()
+        val post = postRepository.findByIdOrNull(id)
+            ?.apply { this.changeStatus() }
+            ?: throw NotExistsException(ErrorCode.NOT_EXISTS_POST)
 
-        return PostChangeStatusResponse(
-            post.id!!,
-            post.title,
-            post.content,
-            post.nickname,
-            post.status.description
-        )
+        return PostChangeStatusResponse(post)
     }
 
     @Transactional
@@ -99,5 +69,4 @@ class PostService(
         postRepository.deleteById(id)
         return PostDeleteResponse1(id)
     }
-
 }
