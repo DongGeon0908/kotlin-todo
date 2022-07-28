@@ -11,7 +11,6 @@ import javax.persistence.MappedSuperclass
 @EntityListeners(value = [AuditingEntityListener::class])
 @MappedSuperclass
 abstract class BaseEntity {
-
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     lateinit var createdAt: LocalDateTime

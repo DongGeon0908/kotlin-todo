@@ -2,6 +2,8 @@ package com.goofy.todo.rest.controller
 
 import com.goofy.todo.config.web.MEDIA_TYPE_APPLICATION_JSON_UTF8_VALUE
 import com.goofy.todo.rest.controller.support.RestSupport
+import com.goofy.todo.rest.dto.PostCreateRequest
+import com.goofy.todo.rest.dto.PostUpdateRequest
 import com.goofy.todo.service.PostService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -21,37 +23,38 @@ import javax.validation.Valid
 class PostRestController(
     private val postService: PostService
 ) : RestSupport() {
-
     @ApiOperation(value = "post를 생성한다")
     @PostMapping
-    fun insert(@Valid @RequestBody request: com.goofy.todo.rest.dto.request.PostCreateRequest) =
-        postService.save(request).wrapCreated()
+    fun insert(
+        @Valid @RequestBody request: PostCreateRequest
+    ) = postService.save(request).wrapCreated()
 
     @ApiOperation("post를 단건 조회한다")
     @GetMapping("/{postId}")
-    fun readOne(@PathVariable postId: Long) =
-        postService.read(postId).wrapOk()
+    fun readOne(
+        @PathVariable postId: Long
+    ) = postService.read(postId).wrapOk()
 
     @ApiOperation("post를 업데이트한다")
     @PatchMapping("/{postId}")
     fun update(
         @PathVariable postId: Long,
-        @Valid @RequestBody request: com.goofy.todo.rest.dto.request.PostUpdateRequest
-    ) =
-        postService.update(postId, request).wrapOk()
+        @Valid @RequestBody request: PostUpdateRequest
+    ) = postService.update(postId, request).wrapOk()
 
     @ApiOperation("post를 전체 조회한다")
     @GetMapping
-    fun readAll() =
-        postService.readAll().wrapOk()
+    fun readAll() = postService.readAll().wrapOk()
 
     @ApiOperation("post의 상태를 변경한다")
     @PostMapping("/{postId}")
-    fun changeStatus(@PathVariable postId: Long) =
-        postService.changeStatus(postId).wrapOk()
+    fun changeStatus(
+        @PathVariable postId: Long
+    ) = postService.changeStatus(postId).wrapOk()
 
     @ApiOperation("post를 삭제한다")
     @DeleteMapping("/{postId}")
-    fun delete(@PathVariable postId: Long) =
-        postService.delete(postId).wrapOk()
+    fun delete(
+        @PathVariable postId: Long
+    ) = postService.delete(postId).wrapOk()
 }

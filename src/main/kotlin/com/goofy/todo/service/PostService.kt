@@ -3,22 +3,21 @@ package com.goofy.todo.service
 import com.goofy.todo.excpetion.ErrorCode
 import com.goofy.todo.excpetion.NotExistsException
 import com.goofy.todo.repository.PostRepository
-import com.goofy.todo.rest.dto.request.PostCreateRequest
-import com.goofy.todo.rest.dto.request.PostUpdateRequest
-import com.goofy.todo.rest.dto.response.PostChangeStatusResponse
-import com.goofy.todo.rest.dto.response.PostCreateResponse
-import com.goofy.todo.rest.dto.response.PostDeleteResponse
-import com.goofy.todo.rest.dto.response.PostReadAllResponse
-import com.goofy.todo.rest.dto.response.PostReadResponse
-import com.goofy.todo.rest.dto.response.PostUpdateResponse
+import com.goofy.todo.rest.dto.PostChangeStatusResponse
+import com.goofy.todo.rest.dto.PostCreateRequest
+import com.goofy.todo.rest.dto.PostCreateResponse
+import com.goofy.todo.rest.dto.PostReadAllResponse
+import com.goofy.todo.rest.dto.PostReadResponse
+import com.goofy.todo.rest.dto.PostUpdateRequest
+import com.goofy.todo.rest.dto.PostUpdateResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import com.goofy.todo.rest.dto.PostDeleteResponse as PostDeleteResponse1
 
 @Service
 class PostService(
     private val postRepository: PostRepository
 ) {
-
     @Transactional
     fun save(request: PostCreateRequest): PostCreateResponse {
         val instance = com.goofy.todo.entity.Post(request.title, request.content, request.nickname)
@@ -96,9 +95,9 @@ class PostService(
     }
 
     @Transactional
-    fun delete(id: Long): PostDeleteResponse {
+    fun delete(id: Long): PostDeleteResponse1 {
         postRepository.deleteById(id)
-        return PostDeleteResponse(id)
+        return PostDeleteResponse1(id)
     }
 
 }
